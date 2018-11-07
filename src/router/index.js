@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: '/form',
-      name: 'DProcdef',
+      name: 'DForm',
       component: DForm
     }
   ]

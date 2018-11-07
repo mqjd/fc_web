@@ -1,80 +1,33 @@
 <template>
-  <div :style="position" class="d-procmodel">121212</div>
+  <d-startevent v-if="options.type=='startevent'" :options="options" :instance="instance" class="d-procmodel"></d-startevent>
+  <d-endevent v-else-if="options.type=='endevent'" :options="options" :instance="instance" class="d-procmodel"></d-endevent>
+  <d-usertask v-else-if="options.type=='usertask'" :options="options" :instance="instance" class="d-procmodel"></d-usertask>
+  <d-usertask v-else :options="options" :instance="instance" class="d-procmodel"></d-usertask>
 </template>
 <script>
-const connectorPaintStyle = {
-  strokeWidth: 2,
-  stroke: '#61B7CF',
-  joinstyle: 'round',
-  outlineStroke: 'white',
-  outlineWidth: 2
-}
-const connectorHoverStyle = {
-  strokeWidth: 3,
-  stroke: '#216477',
-  outlineWidth: 5,
-  outlineStroke: 'white'
-}
-const endpointHoverStyle = {
-  fill: '#216477',
-  stroke: '#216477'
-}
-const sourceEndpoint = {
-  endpoint: 'Dot',
-  paintStyle: {
-    stroke: '#7AB02C',
-    fill: 'transparent',
-    radius: 7,
-    strokeWidth: 1
-  },
-  isSource: true,
-  connector: ['Flowchart', { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-  connectorStyle: connectorPaintStyle,
-  hoverPaintStyle: endpointHoverStyle,
-  connectorHoverStyle: connectorHoverStyle,
-  maxConnections: -1,
-  dragOptions: {},
-  overlays: [
-    ['Label', {
-      location: [0.5, 1.5],
-      label: 'Drag',
-      cssClass: 'endpointSourceLabel',
-      visible: false
-    }]
-  ]
-}
-
-const targetEndpoint = {
-  endpoint: 'Dot',
-  paintStyle: { fill: '#B71C1C', radius: 7 },
-  connector: ['Flowchart', { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-  connectorHoverStyle: connectorHoverStyle,
-  maxConnections: -1,
-  dropOptions: { hoverClass: 'point-hover', activeClass: 'point-active' },
-  isTarget: true,
-  overlays: [
-    ['Label', { location: [0.5, -0.5], label: 'Drop', cssClass: 'endpointTargetLabel', visible: false }]
-  ]
-}
-
-const sourceAndTargetEndpoint = {
-  endpoint: 'Dot',
-  paintStyle: { fill: '#7AB02C', radius: 7 },
-  connector: ['Flowchart', { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-  connectorStyle: connectorPaintStyle,
-  hoverPaintStyle: endpointHoverStyle,
-  connectorHoverStyle: connectorHoverStyle,
-  maxConnections: -1,
-  dropOptions: { hoverClass: 'point-hover', activeClass: 'point-active' },
-  isTarget: true,
-  isSource: true,
-  overlays: [
-    ['Label', { location: [0.5, -0.5], label: 'Drop', cssClass: 'endpointTargetLabel', visible: false }]
-  ]
-}
-
+import DStartevent from './d-startevent.vue'
+import DEndevent from './d-endevent.vue'
+import DUsertask from './d-usertask.vue'
 export default {
   name: 'DProcmodel',
+  components: {
+    DStartevent,
+    DEndevent,
+    DUsertask
+  },
+  render: function (createElement) {
+    return createElement(
+      'd-' + this.options.type,
+      {
+        attrs: {
+          options: this.options,
+          instance: this.instance,
+          class: 'd-procmodel'
+        }
+      },
+      this.$slots.default // 子元素数组
+    )
+  },
   props: {
     options: {
       type: Object
@@ -82,64 +35,44 @@ export default {
     instance: {
       type: Object
     }
-  },
-  data () {
-    return {
-    }
-  },
-  mounted: function () {
-    this.initItem()
-  },
-  computed: {
-    position () {
-      return {
-        left: this.options.position[0] + 'px',
-        top: this.options.position[1] + 'px'
-      }
-    }
-  },
-  methods: {
-    initItem () {
-      this.bind()
-      this.options.id = this.$el.getAttribute('id')
-      this.addPoint()
-    },
-    bind () {
-      var me = this
-      this.instance.draggable(this.$el, {
-        containment: 'parent',
-        grid: [10, 10],
-        stop: function (event, ui) {
-          me.options.position = event.finalPos
-        }
-      })
-    },
-    addPoint () {
-      const point = this.options.point
-      this.addPoint_(sourceEndpoint, point.source)
-      this.addPoint_(targetEndpoint, point.target)
-      this.addPoint_(sourceAndTargetEndpoint, point.both)
-    },
-    addPoint_ (pointConfig, position) {
-      var id = this.options.id
-      if (position) {
-        for (var i = 0; i < position.length; i++) {
-          var sourceUUID = id + '_' + position[i]
-          this.instance.addEndpoint(this.$el, pointConfig, {
-            anchor: position[i],
-            uuid: sourceUUID
-          })
-        }
-      }
-    }
   }
 }
 </script>
 <style scoped>
 .d-procmodel {
-  width: 200px;
-  height: 200px;
+  box-sizing: border-box;
+  border: 1px solid #346789;
+  box-shadow: 2px 2px 19px #aaa;
+  -o-box-shadow: 2px 2px 19px #aaa;
+  -webkit-box-shadow: 2px 2px 19px #aaa;
+  -moz-box-shadow: 2px 2px 19px #aaa;
+  -moz-border-radius: 0.5em;
+  border-radius: 0.5em;
+  opacity: 0.8;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  z-index: 20;
   position: absolute;
-  background-color: #DCDCDC;
+  background-color: #eeeeef;
+  color: black;
+  font-family: helvetica, sans-serif;
+  padding: 0.5em;
+  font-size: 0.9em;
+  -webkit-transition: -webkit-box-shadow 0.1s ease-in;
+  -moz-transition: -moz-box-shadow 0.1s ease-in;
+  -o-transition: -o-box-shadow 0.1s ease-in;
+  transition: box-shadow 0.1s ease-in;
+}
+.d-procmodel:hover {
+  box-shadow: 2px 2px 19px #444;
+  -o-box-shadow: 2px 2px 19px #444;
+  -webkit-box-shadow: 2px 2px 19px #444;
+  -moz-box-shadow: 2px 2px 19px #444;
+  opacity: 0.6;
 }
 </style>

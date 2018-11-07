@@ -5,3 +5,51 @@ html,body{
 .el-container{
   height: 100%;
 }
+.procpanel .jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel{
+  z-index: 21;
+  cursor: pointer;
+}
+.procpanel .aLabel {
+  background-color: white;
+  padding: 0.4em;
+  font: 12px sans-serif;
+  color: #444;
+  z-index: 21;
+  border: 1px dotted gray;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.procpanel .aLabel.jtk-hover {
+  background-color: #5C96BC;
+  color: white;
+  border: 1px solid white;
+}
+.jtk-connected {
+  border: 1px solid green;
+}
+.jtk-drag {
+  outline: 2px solid pink !important;
+}
+path, .jtk-endpoint {
+  cursor: pointer;
+}
+.jtk-overlay {
+  background-color:transparent;
+}
+.jtk-connector path {
+  stroke-width: 2;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 1s linear forwards;
+}
+@keyframes dash {
+  to {
+      stroke-dashoffset: 0;
+  }
+}
+.procpanel .point-hover {
+  border: 5px dotted red;
+}
+.procpanel .point-active {
+  border: 2px dotted green;
+}

@@ -1,16 +1,3 @@
-<template>
-  <d-checkbox :config="this.config" :disabled="this.disabled" v-if="config.type=='checkbox'"></d-checkbox>
-  <d-date :config="this.config" :disabled="this.disabled" v-else-if="config.type=='date'"></d-date>
-  <d-daterange :config="this.config" :disabled="this.disabled" v-else-if="config.type=='daterange'"></d-daterange>
-  <d-input :config="this.config" :disabled="this.disabled" v-else-if="config.type=='input'"></d-input>
-  <d-mutiselect :config="this.config" :disabled="this.disabled" v-else-if="config.type=='mutiselect'"></d-mutiselect>
-  <d-number :config="this.config" :disabled="this.disabled" v-else-if="config.type=='number'"></d-number>
-  <d-radio :config="this.config" :disabled="this.disabled" v-else-if="config.type=='radio'"></d-radio>
-  <d-select :config="this.config" :disabled="this.disabled" v-else-if="config.type=='select'"></d-select>
-  <d-textarea :config="this.config" :disabled="this.disabled" v-else-if="config.type=='textarea'"></d-textarea>
-  <div v-else>{{config.text}}</div>
-</template>
-
 <script>
 import DCheckbox from './d-checkbox.vue'
 import DDate from './d-date.vue'
@@ -33,6 +20,18 @@ export default {
     DRadio,
     DSelect,
     DTextarea
+  },
+  render: function (createElement) {
+    return createElement(
+      'd-' + this.config.type,
+      {
+        attrs: {
+          config: this.config,
+          disabled: this.disabled
+        }
+      },
+      this.$slots.default // 子元素数组
+    )
   },
   props: {
     config: {

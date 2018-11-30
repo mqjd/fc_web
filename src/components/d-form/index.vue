@@ -23,9 +23,9 @@
             </el-switch>
           </el-form-item>
           <el-button-group>
-            <el-button type="primary" icon="fc-icon-return"></el-button>
-            <el-button type="primary" icon="fc-icon-enter"></el-button>
-            <el-button type="primary" icon="fc-icon-right" @click="openDialog"></el-button>
+            <el-button type="primary" icon="fc-icon-undo"></el-button>
+            <el-button type="primary" icon="fc-icon-redo"></el-button>
+            <el-button type="primary" icon="fc-icon-check" @click="openDialog"></el-button>
           </el-button-group>
         </el-form>
       </el-header>
@@ -201,7 +201,7 @@ export default {
   border-left-color: rgb(230, 230, 230);
   border-left-style: solid;
   border-left-width: 1px;
-  padding-top: 20px;
+  padding: 20px 10px 20px 0px;
 }
 .form-item{
   box-sizing: border-box;

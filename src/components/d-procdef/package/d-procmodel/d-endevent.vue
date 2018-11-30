@@ -1,5 +1,5 @@
 <template>
-  <div class="endevent" :style="position"></div>
+  <div class="endevent" :id="options.id" :style="position">{{options.text}}</div>
 </template>
 <script>
 import procmodel from '../../mixins/procmodel'
@@ -14,6 +14,8 @@ export default {
 </script>
 <style scoped>
 .endevent{
+  width: 60px;
+  height: 60px;
   border: none;
   border-radius: 50%;
   background-color: red;

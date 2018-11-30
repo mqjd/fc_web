@@ -1,5 +1,5 @@
 <template>
-  <div class="usertask" :style="position">{{this.options.text}}</div>
+  <div class="usertask" :id="options.id" :style="position">{{this.options.text}}</div>
 </template>
 <script>
 import procmodel from '../../mixins/procmodel'
@@ -14,6 +14,8 @@ export default {
 </script>
 <style scoped>
 .usertask{
-
+  width: 80px;
+  height: 60px;
+  background-color: #BDBDBD;
 }
 </style>

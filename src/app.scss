@@ -1,0 +1,95 @@
+html,body{
+  height: 100%;
+  margin: 0px;
+}
+.el-container{
+  height: 100%;
+}
+.procpanel .jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel{
+  z-index: 21;
+  cursor: pointer;
+}
+.procpanel .aLabel {
+  background-color: white;
+  padding: 0.4em;
+  font: 12px sans-serif;
+  color: #444;
+  z-index: 21;
+  border: 1px dotted gray;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.procpanel .aLabel.jtk-hover {
+  background-color: #5C96BC;
+  color: white;
+  border: 1px solid white;
+}
+.jtk-connected {
+  border: 1px solid green;
+}
+.jtk-drag {
+  outline: 2px solid pink !important;
+}
+path, .jtk-endpoint {
+  cursor: pointer;
+}
+.jtk-overlay {
+  background-color:transparent;
+}
+.jtk-connector path {
+  stroke-width: 2;
+}
+.procpanel .point-hover {
+  border: 5px dotted red;
+}
+.procpanel .point-active {
+  border: 2px dotted green;
+}
+.editor .mce-tinymce{
+  height: 100% !important;
+}
+.mce-panel{
+  box-sizing: border-box !important;
+}
+.mce-container-body.mce-stack-layout{
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+.mce-edit-area{
+  overflow: auto;
+  flex: 1;
+}
+.mce-edit-area>iframe{
+  height: 100% !important;
+}
+a:focus,
+a:active {
+  outline: none;
+}
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+.el-menu-item [class^=fc-icon-], .el-submenu [class^=fc-icon-] {
+  vertical-align: middle;
+  margin-right: 5px;
+  width: 24px;
+  text-align: center;
+  font-size: 24px;
+}
+.el-upload-list__item-name [class^=fc-icon] {
+  height: 100%;
+  margin-right: 7px;
+  color: #909399;
+  line-height: inherit
+}
+.el-menu--collapse>.el-menu-item [class^=fc-icon-],.el-menu--collapse>.el-submenu>.el-submenu__title [class^=fc-icon-] {
+  margin: 0;
+  vertical-align: middle;
+  width: 24px;
+  text-align: center
+}

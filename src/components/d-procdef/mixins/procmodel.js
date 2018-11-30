@@ -77,8 +77,18 @@ export default {
       type: Object
     }
   },
+  created: function () {
+    if (!this.options.position) {
+      this.options.position = [0, 0]
+    }
+  },
+  beforeDestory: function () {
+    this.instance.remove(this.options.id)
+  },
   mounted: function () {
-    this.initItem()
+    if (this.instance) {
+      this.initItem()
+    }
   },
   computed: {
     position () {
@@ -91,7 +101,6 @@ export default {
   methods: {
     initItem () {
       this.bind()
-      this.options.id = this.$el.getAttribute('id')
       this.addPoint()
     },
     bind () {

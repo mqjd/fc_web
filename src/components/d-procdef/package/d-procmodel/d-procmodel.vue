@@ -2,31 +2,24 @@
   <d-startevent v-if="options.type=='startevent'" :options="options" :instance="instance" class="d-procmodel"></d-startevent>
   <d-endevent v-else-if="options.type=='endevent'" :options="options" :instance="instance" class="d-procmodel"></d-endevent>
   <d-usertask v-else-if="options.type=='usertask'" :options="options" :instance="instance" class="d-procmodel"></d-usertask>
+  <d-parallel v-else-if="options.type=='parallel'" :options="options" :instance="instance" class="d-procmodel"></d-parallel>
+  <d-exclusive v-else-if="options.type=='exclusive'" :options="options" :instance="instance" class="d-procmodel"></d-exclusive>
   <d-usertask v-else :options="options" :instance="instance" class="d-procmodel"></d-usertask>
 </template>
 <script>
 import DStartevent from './d-startevent.vue'
 import DEndevent from './d-endevent.vue'
 import DUsertask from './d-usertask.vue'
+import DParallel from './d-parallel.vue'
+import DExclusive from './d-exclusive.vue'
 export default {
   name: 'DProcmodel',
   components: {
     DStartevent,
     DEndevent,
-    DUsertask
-  },
-  render: function (createElement) {
-    return createElement(
-      'd-' + this.options.type,
-      {
-        attrs: {
-          options: this.options,
-          instance: this.instance,
-          class: 'd-procmodel'
-        }
-      },
-      this.$slots.default // 子元素数组
-    )
+    DUsertask,
+    DParallel,
+    DExclusive
   },
   props: {
     options: {
@@ -49,8 +42,8 @@ export default {
   -moz-border-radius: 0.5em;
   border-radius: 0.5em;
   opacity: 0.8;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;

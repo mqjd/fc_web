@@ -7,6 +7,8 @@
             v-for="child in item.child"
             :key="child.type"
             :options="child"
+            :clone="true"
+            @drag="drag(item, $event)"
           >
           </procmodel>
         </svg>
@@ -30,6 +32,12 @@ export default {
   data () {
     return {
       activeName: '1'
+    }
+  },
+  methods: {
+    drag (item, event) {
+      item.x = event.x
+      item.y = event.y
     }
   }
 }

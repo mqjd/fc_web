@@ -8,6 +8,8 @@ var data = [{
     r: 30,
     x: 50,
     y: 40,
+    width: 60,
+    height: 60,
     point: {
       source: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
     }
@@ -17,6 +19,8 @@ var data = [{
     r: 30,
     x: 150,
     y: 40,
+    width: 60,
+    height: 60,
     point: {
       target: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
     }
@@ -31,8 +35,8 @@ var data = [{
     formKey: '',
     width: 80,
     height: 60,
-    x: 15,
-    y: 10,
+    x: 55,
+    y: 40,
     point: {
       both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
     }
@@ -45,8 +49,8 @@ var data = [{
     text: '分支网关',
     width: 60,
     height: 60,
-    x: 20,
-    y: 10,
+    x: 50,
+    y: 40,
     point: {
       both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
     }
@@ -55,8 +59,8 @@ var data = [{
     text: '并行网关',
     width: 60,
     height: 60,
-    x: 120,
-    y: 10,
+    x: 150,
+    y: 40,
     point: {
       both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
     }

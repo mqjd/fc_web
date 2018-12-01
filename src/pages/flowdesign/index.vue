@@ -1,21 +1,51 @@
 <template>
   <div class="flow-design">
     <model-panel :procmodels="procmodels"></model-panel>
-    <div class="main"></div>
+    <chart-panel :procmodels="chartmodels"></chart-panel>
     <div class="option-form"></div>
   </div>
 </template>
 <script>
 import procmodels from './procmodel-base-config.js'
 import ModelPanel from './ModelPanel'
+import ChartPanel from './ChartPanel'
 export default {
   name: 'flowDesign',
   components: {
-    ModelPanel
+    ModelPanel,
+    ChartPanel
+  },
+  mounted () {
   },
   data () {
     return {
-      procmodels: procmodels
+      procmodels: procmodels,
+      chartmodels: [{
+        type: 'user-task',
+        text: '用户任务',
+        assign: '',
+        formKey: '',
+        width: 80,
+        height: 60,
+        x: 55,
+        y: 40,
+        point: {
+          both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
+        }
+      }]
+    }
+  },
+  methods: {
+    addModelBefore () {
+
+    },
+    addModelDragging () {
+
+    },
+    addModelAfter () {
+
+    },
+    modelDrag (item) {
     }
   }
 }

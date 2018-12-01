@@ -1,6 +1,7 @@
 <template>
-  <g class="start-event">
-    <circle :r="r" :cx="x" :cy="y"></circle>
+  <g class="start-event" :transform="transform">
+    <slot></slot>
+    <circle :r="r" :cx="r" :cy="r"></circle>
   </g>
 </template>
 <script>

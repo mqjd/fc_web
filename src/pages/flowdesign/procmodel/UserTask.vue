@@ -1,6 +1,7 @@
 <template>
-  <g class="user-task">
-    <rect :width="width" :height="height" :x="x" :y="y"></rect>
+  <g class="user-task" :transform="transform">
+    <rect :width="width" :height="height"></rect>
+    <slot></slot>
   </g>
 </template>
 <script>

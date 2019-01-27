@@ -1,3 +1,5 @@
+
+@import '../node_modules/pell/src/pell';
 html,body{
   height: 100%;
   margin: 0px;
@@ -19,10 +21,19 @@ html,body{
   opacity: 0.8;
   cursor: pointer;
 }
+.aLabel.pass {
+  border: 1px solid green;
+}
+.aLabel.reject {
+  border: 1px solid red;
+}
 .procpanel .aLabel.jtk-hover {
   background-color: #5C96BC;
   color: white;
   border: 1px solid white;
+}
+.expression-state .el-radio__label{
+  padding-left: 7px;
 }
 .jtk-connected {
   border: 1px solid green;
@@ -92,4 +103,15 @@ a:hover {
   vertical-align: middle;
   width: 24px;
   text-align: center
+}
+.tui-editor-contents .task-list-item{
+  cursor: pointer;
+}
+.tui-editor-defaultUI{
+  box-sizing: border-box;
+}
+.tui-editor-contents table th {
+  border: 1px solid #DCDFE6 !important;
+  background-color: #eeeeee !important;
+  color: #303133 !important;
 }

@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="main-container">
-      <transition name="el-fade-in-linear">
+      <transition name="el-fade-in" mode="out-in">
         <keep-alive :include="cachedPages">
           <router-view :key="key"></router-view>
         </keep-alive>
@@ -79,9 +79,17 @@ export default {
       return route.path === this.$route.path
     },
     addPage () {
-      const { name, path } = this.$route
-      if (name !== 'main' && path.indexOf('/redirect') !== 0) {
-        this.$store.dispatch('addPage', this.$route)
+      const { meta, name } = this.$route
+      if (name) {
+        const cache = meta.cache === undefined || meta.cache
+        const tab = meta.tab === undefined || meta.tab
+        if (tab && cache) {
+          this.$store.dispatch('addPage', this.$route)
+        } else if (cache) {
+          this.$store.dispatch('addCachedPage', this.$route)
+        } else if (tab) {
+          this.$store.dispatch('addVisitedPage', this.$route)
+        }
       }
     },
     openMenu (tag, e) {
@@ -149,7 +157,7 @@ export default {
   .contextmenu {
     margin: 0;
     background: #fff;
-    z-index: 100;
+    z-index: 10000;
     position: absolute;
     list-style-type: none;
     padding: 5px 0;
@@ -221,6 +229,7 @@ export default {
   }
   .main-container{
     flex: 1;
+    overflow: auto;
   }
 }
 </style>

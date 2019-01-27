@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import { setToken } from '@/utils/auth'
 export default {
   name: 'Login',
   data () {
@@ -76,6 +77,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          setToken('xxx')
           this.$router.push({ path: this.redirect || '/' })
         }
       })

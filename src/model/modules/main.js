@@ -10,7 +10,7 @@ const model = {
   },
   mutations: {
     ADD_VISITED_PAGE: (state, page) => {
-      if (state.tags.visitedPages.some(v => v.name === page.name)) return
+      if (state.tags.visitedPages.some(v => v.path === page.path)) return
       state.tags.visitedPages.push(
         Object.assign({}, page, {
           name: page.name || 'no-name'
@@ -24,7 +24,7 @@ const model = {
       }
     },
     DEL_VISITED_PAGE: (state, page) => {
-      const index = state.tags.visitedPages.findIndex(v => v.name === page.name)
+      const index = state.tags.visitedPages.findIndex(v => v.path === page.path)
       state.tags.visitedPages.splice(index, 1)
     },
     DEL_CACHED_PAGE: (state, page) => {

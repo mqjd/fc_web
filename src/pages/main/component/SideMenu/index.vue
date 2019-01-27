@@ -3,11 +3,12 @@
     :collapse="isCollapse"
     :default-active="acitveKey"
     class="side-menu"
+    unique-opened
   >
     <side-menu-item
-      v-for="item of pageperm"
-      v-if="!item.hidden"
+      v-for="item of menus"
       :key="item.name"
+      :base-path="item.path"
       :item="item">
     </side-menu-item>
   </el-menu>
@@ -29,6 +30,9 @@ export default {
       'sidemenu',
       'pageperm'
     ]),
+    menus () {
+      return this.pageperm.filter(item => !item.hidden)
+    },
     isCollapse () {
       return this.sidemenu.collapse
     },

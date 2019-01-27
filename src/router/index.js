@@ -6,7 +6,12 @@ Vue.use(Router)
 export const RouterMap = [{
   path: '/redirect',
   component: Main,
+  name: 'redirect',
   hidden: true,
+  meta: {
+    cache: false,
+    tab: false
+  },
   children: [
     {
       path: '/redirect/:path*',
@@ -16,35 +21,106 @@ export const RouterMap = [{
 }, {
   path: '/',
   name: 'main',
-  meta: { title: '主页', icon: 'fc-icon-home' },
+  meta: {
+    title: '主页',
+    icon: 'fc-icon-home',
+    cache: false,
+    tab: false
+  },
   component: Main
 }, {
   path: '/login',
   name: 'login',
-  meta: { title: '登陆', icon: 'fc-icon-user' },
+  hidden: true,
+  meta: {
+    title: '登陆',
+    icon: 'fc-icon-user'
+  },
   component: () => import('@/pages/login')
 }, {
-  path: '/',
+  path: '/component',
+  name: 'component',
+  meta: { title: '基础组件', icon: 'fc-icon-appstore' },
+  component: Main,
+  children: [{
+    path: 'xTable',
+    name: 'xTable',
+    meta: { title: '表格', icon: 'fc-icon-table' },
+    component: () => import('@/components/x-table')
+  }]
+}, {
+  path: '/sys',
+  name: 'sys',
+  meta: { title: '系统配置', icon: 'fc-icon-setting' },
+  component: Main,
+  children: [{
+    path: 'DeptManage',
+    name: 'DeptManage',
+    meta: { title: '科室管理', icon: 'fc-icon-cluster' },
+    component: () => import('@/pages/DeptManage')
+  }]
+}, {
+  path: '/flow',
   name: 'flow',
   meta: { title: '流程管理', icon: 'fc-icon-deploymentunit' },
   component: Main,
   children: [{
-    path: 'flowdesign',
-    name: 'flowdesign',
-    meta: { title: '流程设计', icon: 'fc-icon-gateway' },
-    component: () => import('@/pages/flowdesign')
+    path: 'flowDesign',
+    name: 'flowDesign',
+    meta: { title: '流程管理', icon: 'fc-icon-gateway' },
+    component: () => import('@/pages/flowDesign')
   },
   {
-    path: 'form',
-    name: 'form',
-    meta: { title: '普通表单', icon: 'fc-icon-table' },
+    path: 'DForm',
+    name: 'DForm',
+    meta: { title: '表单管理', icon: 'fc-icon-table' },
     component: () => import('@/components/d-form')
   },
   {
-    path: 'rform',
-    name: 'rform',
-    meta: { title: '富文本表单', icon: 'fc-icon-file-text' },
+    path: 'RForm',
+    name: 'r-form',
+    meta: {
+      title: 'tinymce',
+      icon: 'fc-icon-file-text',
+      cache: false
+    },
     component: () => import('@/components/r-form')
+  },
+  {
+    path: 'XForm',
+    name: 'x-form',
+    meta: {
+      title: 'tui.editor',
+      icon: 'fc-icon-file-text'
+    },
+    component: () => import('@/components/x-form')
+  },
+  {
+    path: 'MForm',
+    name: 'm-form',
+    meta: {
+      title: 'markdown',
+      icon: 'fc-icon-file-text'
+    },
+    component: () => import('@/components/m-form')
+  },
+  {
+    path: 'calendar',
+    name: 'calendar',
+    meta: {
+      title: 'calendar',
+      icon: 'fc-icon-file-text'
+    },
+    component: () => import('@/components/calendar')
+  },
+  {
+    path: 'table',
+    name: 'table',
+    meta: {
+      title: 'table',
+      icon: 'fc-icon-file-text'
+    },
+    component: () => import('@/components/d-table')
   }]
 }]
 

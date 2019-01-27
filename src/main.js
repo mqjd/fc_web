@@ -5,10 +5,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/icon/iconfont.css'
 import './app.scss'
 import App from './App'
-import router from './router'
 import store from './model/store'
 import ElementUI from 'element-ui'
+
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+import router from './router'
+import './perm'
+
 Vue.use(ElementUI)
 Vue.component(CollapseTransition.name, CollapseTransition)
 Vue.config.productionTip = false
@@ -16,8 +19,8 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
   store,
+  router,
   components: { App },
   template: '<App/>'
 })

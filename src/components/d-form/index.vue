@@ -16,18 +16,17 @@
     </el-aside>
     <el-container>
       <el-header class="tools">
-        <el-form :inline="true">
-          <el-form-item label="禁用编辑">
-            <el-switch
-              v-model="disabled">
-            </el-switch>
-          </el-form-item>
-          <el-button-group>
-            <el-button type="primary" icon="fc-icon-undo"></el-button>
-            <el-button type="primary" icon="fc-icon-redo"></el-button>
-            <el-button type="primary" icon="fc-icon-check" @click="openDialog"></el-button>
-          </el-button-group>
-        </el-form>
+        <div class="disable-editor">
+          <span>禁用编辑</span>
+          <el-switch
+            v-model="disabled">
+          </el-switch>
+        </div>
+        <el-button-group class="item">
+          <el-button type="primary" icon="fc-icon-undo" size="mini"></el-button>
+          <el-button type="primary" icon="fc-icon-redo" size="mini"></el-button>
+          <el-button type="primary" icon="fc-icon-check" @click="openDialog" size="mini"></el-button>
+        </el-button-group>
       </el-header>
       <el-container>
         <el-main>
@@ -191,7 +190,9 @@ export default {
 }
 .tools{
   height: auto !important;
-  padding-top: 5px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
   border-bottom-color: rgb(230, 230, 230);
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -241,5 +242,13 @@ export default {
   top: -6px;
   z-index: 1000;
   cursor: pointer;
+}
+.disable-editor{
+  font-size: 14px;
+  color: #606266;
+  display: inline-block;
+}
+.item{
+  margin-left: 5px;
 }
 </style>

@@ -1,25 +1,41 @@
 <template>
-  <el-container class="x-table">
-    <el-aside class="x-table-rownum">
-      <el-container>
-        <el-header class="x-table-header" :style="{height: cellSize.height + 'px!important'}"></el-header>
-        <el-main class="x-rownum-container" ref="tableRownum">
-          <xtable-content :table="rownum"></xtable-content>
+  <el-container>
+    <el-header style="height:auto" class="x-table-tool">
+      <div class="tool-align">
+        <el-button-group>
+          <el-button size="mini" icon="fc-icon-vertical-align-top"></el-button>
+          <el-button size="mini" icon="fc-icon-vertical-align-middl"></el-button>
+          <el-button size="mini" icon="fc-icon-vertical-align-botto"></el-button>
+        </el-button-group>
+        <el-button-group>
+          <el-button size="mini" icon="fc-icon-align-left"></el-button>
+          <el-button size="mini" icon="fc-icon-align-center"></el-button>
+          <el-button size="mini" icon="fc-icon-align-right"></el-button>
+        </el-button-group>
+      </div>
+    </el-header>
+    <el-container class="x-table">
+      <el-aside class="x-table-rownum">
+        <el-container>
+          <el-header class="x-table-header" :style="{height: cellSize.height + 'px!important'}"></el-header>
+          <el-main class="x-rownum-container" ref="tableRownum">
+            <xtable-content :table="rownum"></xtable-content>
+          </el-main>
+        </el-container>
+      </el-aside>
+      <el-container class="x-table-view">
+        <el-header class="x-table-header">
+          <el-container>
+            <el-main ref="tableHeader" class="x-header-container">
+              <xtable-content :table="header"></xtable-content>
+            </el-main>
+            <el-aside width="8px"></el-aside>
+          </el-container>
+        </el-header>
+        <el-main class="x-table-body" @scroll.native="scroll" ref="tableBody">
+          <xtable-content :rowCount="rows" :colCount="cols"></xtable-content>
         </el-main>
       </el-container>
-    </el-aside>
-    <el-container class="x-table-view">
-      <el-header class="x-table-header">
-        <el-container>
-          <el-main ref="tableHeader" class="x-header-container">
-            <xtable-content :table="header"></xtable-content>
-          </el-main>
-          <el-aside width="8px"></el-aside>
-        </el-container>
-      </el-header>
-      <el-main class="x-table-body" @scroll.native="scroll" ref="tableBody">
-        <xtable-content :rowCount="rows" :colCount="cols"></xtable-content>
-      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -107,6 +123,19 @@ export default {
 <style lang="scss" scoped>
 .el-container, .el-aside,.el-main, .el-header{
   padding: 0px;
+}
+.x-table-tool{
+  .tool-align{
+    display: inline-block;
+  }
+  .el-button-group{
+    display: block;
+    .el-button{
+      padding:2px;
+      font-size: 20px;
+      border: none;
+    }
+  }
 }
 .x-table{
   .x-table-rownum{

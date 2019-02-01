@@ -71,13 +71,13 @@ export default {
       const targetBound = e.target.getBoundingClientRect()
       const offsetWidth = this.$el.offsetWidth
       const maxLeft = offsetWidth - targetBound.width
-      const left = e.clientX + 15
+      const left = e.offsetX + 15
       if (left > maxLeft) {
         this.left = maxLeft
       } else {
         this.left = left
       }
-      this.top = e.clientY
+      this.top = e.offsetY
       this.visible = true
       this.selectedTag = tag
     },

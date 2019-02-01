@@ -77,6 +77,7 @@ export default {
 <style lang="scss" scoped>
 .x-form{
   height: 100%;
+  width: 100%;
   min-height: 300px;
 }
 </style>

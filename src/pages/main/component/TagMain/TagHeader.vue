@@ -69,9 +69,9 @@ export default {
     },
     openMenu (tag, e) {
       const targetBound = e.target.getBoundingClientRect()
-      const offsetWidth = this.$el.offsetWidth
-      const maxLeft = offsetWidth - targetBound.width
-      const left = e.offsetX + 15
+      const homeBound = this.$el.getBoundingClientRect()
+      const maxLeft = homeBound.width - targetBound.width
+      const left = e.clientX - homeBound.left + 15
       if (left > maxLeft) {
         this.left = maxLeft
       } else {

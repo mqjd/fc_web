@@ -334,7 +334,6 @@ export default {
 <style lang="scss" scoped>
 .x-table-content{
   font-size: 12px;
-  border-collapse: collapse;
   table-layout:fixed;
   --webkit-touch-callout: none;
   --webkit-user-select: none;

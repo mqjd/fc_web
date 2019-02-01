@@ -7,6 +7,7 @@
         <div @click="remove"><i class="context delete el-icon-delete"></i>删除</div>
       </div>
       <el-tree
+        ref="tree"
         :data="data"
         :props="defaultProps"
         node-key="id"
@@ -82,6 +83,7 @@ export default {
     onTreeContextmenu (event, data, node, el) {
       this.contextItem = data
       this.contextNode = node
+      this.$refs.tree.setCurrentNode(node)
       this.contextStyle = {
         top: event.pageY + 'px',
         left: event.pageX + 'px',

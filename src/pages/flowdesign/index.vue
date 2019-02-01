@@ -297,14 +297,13 @@ export default {
       height: 100%;
       position: relative;
     }
-    .option-form{
-      position: relative;
-      padding: 5px;
-      border-left-color: rgb(230, 230, 230);
-      border-left-style: solid;
-      border-left-width: 1px;
-    }
   }
-
+  .option-form{
+    position: relative;
+    padding: 5px;
+    border-left-color: rgb(230, 230, 230);
+    border-left-style: solid;
+    border-left-width: 1px;
+  }
 }
 </style>

@@ -14,31 +14,29 @@
         </el-button-group>
       </div>
     </el-header>
-    <el-main>
-      <el-container class="x-table">
-        <el-aside class="x-table-rownum">
-          <el-container>
-            <el-header class="x-table-header" :style="{height: cellSize.height + 'px!important'}"></el-header>
-            <el-main class="x-rownum-container" ref="tableRownum">
-              <xtable-content :table="rownum"></xtable-content>
-            </el-main>
-          </el-container>
-        </el-aside>
-        <el-container class="x-table-view">
-          <el-header class="x-table-header">
-            <el-container>
-              <el-main ref="tableHeader" class="x-header-container">
-                <xtable-content :table="header"></xtable-content>
-              </el-main>
-              <el-aside width="8px"></el-aside>
-            </el-container>
-          </el-header>
-          <el-main class="x-table-body" @scroll.native="scroll" ref="tableBody">
-            <xtable-content :rowCount="rows" :colCount="cols"></xtable-content>
+    <el-container class="x-table">
+      <el-aside class="x-table-rownum">
+        <el-container>
+          <el-header class="x-table-header" :style="{height: cellSize.height + 1 + 'px!important'}"></el-header>
+          <el-main class="x-rownum-container" ref="tableRownum">
+            <xtable-content :table="rownum"></xtable-content>
           </el-main>
         </el-container>
+      </el-aside>
+      <el-container class="x-table-view">
+        <el-header class="x-table-header">
+          <el-container>
+            <el-main ref="tableHeader" class="x-header-container">
+              <xtable-content :table="header"></xtable-content>
+            </el-main>
+            <el-aside width="8px"></el-aside>
+          </el-container>
+        </el-header>
+        <el-main class="x-table-body" @scroll.native="scroll" ref="tableBody">
+          <xtable-content :rowCount="rows" :colCount="cols"></xtable-content>
+        </el-main>
       </el-container>
-    </el-main>
+    </el-container>
   </el-container>
 </template>
 <script>
@@ -55,10 +53,10 @@ export default {
   },
   watch: {
     scrollLeft (val) {
-      this.$refs.tableHeader.$el.scrollTo(val, 0)
+      this.$refs.tableHeader.$el.scrollLeft = val
     },
     scrollTop (val) {
-      this.$refs.tableRownum.$el.scrollTo(0, val)
+      this.$refs.tableRownum.$el.scrollTop = val
     }
   },
   data () {
@@ -141,12 +139,14 @@ export default {
 }
 .x-table{
   .x-table-rownum{
+    display: flex;
     background-color: #e0e0e0;
     width: auto !important;
     border-right: 1px solid #EEEEEE;
     .x-table-header{
       height: auto !important;
       border-bottom: 1px solid #EEEEEE;
+      border-right: 1px solid #EEEEEE;
     }
     .x-rownum-container{
       padding-bottom: 8px;
@@ -155,9 +155,9 @@ export default {
   }
   .x-table-view{
     .x-table-header{
+      display: flex;
       background-color: #e0e0e0;
       height: auto !important;
-      border-bottom: 1px solid #EEEEEE;
       overflow: hidden;
       .x-header-container{
         overflow: hidden;

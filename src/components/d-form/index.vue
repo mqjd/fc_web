@@ -183,6 +183,7 @@ export default {
 .form-containter{
   height: 100%;
   width: 100%;
+  padding: 5px;
   box-sizing: border-box;
 }
 .el-menu{

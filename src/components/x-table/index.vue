@@ -14,29 +14,31 @@
         </el-button-group>
       </div>
     </el-header>
-    <el-container class="x-table">
-      <el-aside class="x-table-rownum">
-        <el-container>
-          <el-header class="x-table-header" :style="{height: cellSize.height + 'px!important'}"></el-header>
-          <el-main class="x-rownum-container" ref="tableRownum">
-            <xtable-content :table="rownum"></xtable-content>
+    <el-main>
+      <el-container class="x-table">
+        <el-aside class="x-table-rownum">
+          <el-container>
+            <el-header class="x-table-header" :style="{height: cellSize.height + 'px!important'}"></el-header>
+            <el-main class="x-rownum-container" ref="tableRownum">
+              <xtable-content :table="rownum"></xtable-content>
+            </el-main>
+          </el-container>
+        </el-aside>
+        <el-container class="x-table-view">
+          <el-header class="x-table-header">
+            <el-container>
+              <el-main ref="tableHeader" class="x-header-container">
+                <xtable-content :table="header"></xtable-content>
+              </el-main>
+              <el-aside width="8px"></el-aside>
+            </el-container>
+          </el-header>
+          <el-main class="x-table-body" @scroll.native="scroll" ref="tableBody">
+            <xtable-content :rowCount="rows" :colCount="cols"></xtable-content>
           </el-main>
         </el-container>
-      </el-aside>
-      <el-container class="x-table-view">
-        <el-header class="x-table-header">
-          <el-container>
-            <el-main ref="tableHeader" class="x-header-container">
-              <xtable-content :table="header"></xtable-content>
-            </el-main>
-            <el-aside width="8px"></el-aside>
-          </el-container>
-        </el-header>
-        <el-main class="x-table-body" @scroll.native="scroll" ref="tableBody">
-          <xtable-content :rowCount="rows" :colCount="cols"></xtable-content>
-        </el-main>
       </el-container>
-    </el-container>
+    </el-main>
   </el-container>
 </template>
 <script>
@@ -65,8 +67,8 @@ export default {
         width: 80,
         height: 28
       },
-      rows: 50,
-      cols: 30,
+      rows: 30,
+      cols: 20,
       scrollLeft: 0,
       scrollTop: 0
     }

@@ -43,11 +43,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.side-menu{
-  height: 100%;
-  border-right: 1px solid rgb(230, 230, 230);
-}
 .side-menu:not(.el-menu--collapse) {
   width: 200px;
+}
+.side-menu{
+  border-right: 1px solid rgb(230, 230, 230);
+  height: 100%;
 }
 </style>

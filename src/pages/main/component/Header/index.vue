@@ -30,9 +30,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-header{
-  box-sizing: border-box;
   border-bottom: 1px solid rgb(230, 230, 230);
-  height: 50px;
   .el-button{
     margin: 5px 0px;
     border: none;

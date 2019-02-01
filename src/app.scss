@@ -1,11 +1,12 @@
-
-@import '../node_modules/pell/src/pell';
 html,body{
   height: 100%;
   margin: 0px;
 }
 .el-container{
   height: 100%;
+}
+.el-container,.el-aside, .el-header, .el-main{
+  padding: 0px;
 }
 .procpanel .jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel{
   z-index: 21;

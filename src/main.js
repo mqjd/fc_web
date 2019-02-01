@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+import 'normalize.css/normalize.css'
 import 'element-ui/lib/theme-chalk/base.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/icon/iconfont.css'

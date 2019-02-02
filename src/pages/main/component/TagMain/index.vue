@@ -1,11 +1,9 @@
 <template>
-  <div class="tag-main">
-    <transition name="el-fade-in" mode="out-in">
-      <keep-alive :include="cachedPages">
-        <router-view :key="key"></router-view>
-      </keep-alive>
-    </transition>
-  </div>
+  <transition name="el-fade-in" mode="out-in">
+    <keep-alive :include="cachedPages">
+      <router-view :key="key"></router-view>
+    </keep-alive>
+  </transition>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -55,9 +53,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.tag-main{
-  flex: 1;
-  display: flex;
-}
-</style>

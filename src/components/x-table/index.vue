@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-header style="height:auto" class="x-table-tool">
       <div class="tool-align">
         <el-button-group>
@@ -15,14 +15,12 @@
       </div>
     </el-header>
     <el-container class="x-table">
-      <el-aside class="x-table-rownum">
-        <el-container>
-          <el-header class="x-table-header" :style="{height: cellSize.height + 1 + 'px!important'}"></el-header>
-          <el-main class="x-rownum-container" ref="tableRownum">
-            <xtable-content :table="rownum"></xtable-content>
-          </el-main>
-        </el-container>
-      </el-aside>
+      <el-container class="x-table-rownum">
+        <el-header class="x-table-header" :style="{height: cellSize.height + 1 + 'px!important'}"></el-header>
+        <el-main class="x-rownum-container" ref="tableRownum">
+          <xtable-content :table="rownum"></xtable-content>
+        </el-main>
+      </el-container>
       <el-container class="x-table-view">
         <el-header class="x-table-header">
           <el-container>
@@ -121,51 +119,53 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-container, .el-aside,.el-main, .el-header{
-  padding: 0px;
-}
-.x-table-tool{
-  .tool-align{
-    display: inline-block;
-  }
-  .el-button-group{
-    display: block;
-    .el-button{
-      padding:2px;
-      font-size: 20px;
-      border: none;
+.container{
+  height: 100%;
+  overflow: hidden;
+  .x-table-tool{
+    .tool-align{
+      display: inline-block;
+    }
+    .el-button-group{
+      display: block;
+      .el-button{
+        padding:2px;
+        font-size: 20px;
+        border: none;
+      }
     }
   }
-}
-.x-table{
-  .x-table-rownum{
-    display: flex;
-    background-color: #e0e0e0;
-    width: auto !important;
-    border-right: 1px solid #EEEEEE;
-    .x-table-header{
-      height: auto !important;
-      border-bottom: 1px solid #EEEEEE;
-      border-right: 1px solid #EEEEEE;
-    }
-    .x-rownum-container{
-      padding-bottom: 8px;
-      overflow: hidden;
-    }
-  }
-  .x-table-view{
-    .x-table-header{
-      display: flex;
+  .x-table{
+    overflow: hidden;
+    .x-table-rownum{
+      flex: none;
       background-color: #e0e0e0;
-      height: auto !important;
-      overflow: hidden;
-      .x-header-container{
+      width: auto !important;
+      border-right: 1px solid #EEEEEE;
+      .x-table-header{
+        height: auto !important;
+        border-bottom: 1px solid #EEEEEE;
+        border-right: 1px solid #EEEEEE;
+      }
+      .x-rownum-container{
+        padding-bottom: 8px;
         overflow: hidden;
       }
     }
-    .x-table-body{
-      overflow: auto;
-      display: table-cell;
+    .x-table-view{
+      .x-table-header{
+        display: flex;
+        background-color: #e0e0e0;
+        height: auto !important;
+        overflow: hidden;
+        .x-header-container{
+          overflow: hidden;
+        }
+      }
+      .x-table-body{
+        overflow: auto;
+        display: table-cell;
+      }
     }
   }
 }

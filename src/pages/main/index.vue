@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-aside class="aside">
       <side-menu></side-menu>
     </el-aside>
@@ -7,11 +7,11 @@
       <el-header style="height:50px;">
         <app-header></app-header>
       </el-header>
-      <el-container direction="vertical" class="tag-main">
+      <el-container direction="vertical" class="tag-container">
         <el-header class="tag-view" v-if="tags.visitedPages.length!=0">
           <tag-header></tag-header>
         </el-header>
-        <el-container>
+        <el-container class="tag-main">
           <tag-main></tag-main>
         </el-container>
       </el-container>
@@ -45,15 +45,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-container{
+.container{
   height: 100%;
   .aside{
     width: auto !important;
   }
   .main{
     height: 100%;
-    .tag-main{
+    .tag-container{
       width: 100%;
+      overflow: hidden;
     }
     .tag-view{
       z-index: 1;
@@ -63,6 +64,11 @@ export default {
       padding: 4px 0px;
       border-bottom: 1px solid #d8dce5;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+    }
+    .tag-main{
+      -ms-flex-direction: column;
+      flex-direction: column;
+      overflow: auto;
     }
   }
 }

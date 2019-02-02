@@ -47,6 +47,11 @@ export const RouterMap = [{
     name: 'xTable',
     meta: { title: '表格', icon: 'fc-icon-table' },
     component: () => import('@/components/x-table')
+  }, {
+    path: 'cEditor',
+    name: 'cEditor',
+    meta: { title: '代码编辑', icon: 'fc-icon-table' },
+    component: () => import('@/components/c-editor')
   }]
 }, {
   path: '/sys',

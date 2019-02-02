@@ -29,11 +29,13 @@ export default {
 .cell-container, .cell-content{
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .cell-content{
   display: table;
   .x-cell{
     display: table-cell;
+    text-overflow: ellipsis;
   }
 }
 </style>

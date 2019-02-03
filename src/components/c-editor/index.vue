@@ -63,6 +63,7 @@ export default {
   background-color: #1e1e1e;
   height: 100%;
   width: 100%;
+  flex: 1;
   overflow: hidden;
   box-sizing: border-box;
 }

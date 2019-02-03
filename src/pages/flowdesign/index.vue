@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-aside class="model-aside">
       <el-collapse accordion>
         <el-collapse-item
@@ -270,6 +270,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.container{
+  height: 100%;
+}
 .dragging-item{
   position: absolute;
   display: none;

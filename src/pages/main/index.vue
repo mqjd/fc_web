@@ -11,8 +11,10 @@
         <el-header class="tag-view" v-if="tags.visitedPages.length!=0">
           <tag-header></tag-header>
         </el-header>
-        <el-container class="tag-main">
-          <tag-main></tag-main>
+        <el-container class="tag-container">
+          <div class="router-container">
+            <tag-main></tag-main>
+          </div>
         </el-container>
       </el-container>
     </el-container>
@@ -48,6 +50,7 @@ export default {
 .container{
   height: 100%;
   .aside{
+    height: 100%;
     width: auto !important;
   }
   .main{
@@ -65,10 +68,16 @@ export default {
       border-bottom: 1px solid #d8dce5;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
     }
-    .tag-main{
+    .tag-container{
       -ms-flex-direction: column;
       flex-direction: column;
       overflow: auto;
+      position: relative;
+      .router-container{
+        height: 100%;
+        width: 100%;
+        position: absolute;
+      }
     }
   }
 }

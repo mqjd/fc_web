@@ -50,7 +50,7 @@ export const RouterMap = [{
   }, {
     path: 'cEditor',
     name: 'cEditor',
-    meta: { title: '代码编辑', icon: 'fc-icon-table' },
+    meta: { title: '代码编辑', icon: 'fc-icon-code' },
     component: () => import('@/components/c-editor')
   }]
 }, {

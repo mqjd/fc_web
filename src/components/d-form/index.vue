@@ -1,6 +1,6 @@
 <template>
-  <el-container>
-    <el-aside width="200px">
+  <el-container style="height:100%">
+    <el-aside width="200px" style="height:100%">
       <el-menu
         unique-opened
       >
@@ -29,23 +29,21 @@
         </el-button-group>
       </el-header>
       <el-container>
-        <el-main>
-          <el-form label-width="80px" class="form-containter" @click.native.stop="clearCurrentField()">
-            <draggable v-model="formField" :options="formFieldOption" class="form-containter" @start="onDragStart">
-              <el-form-item
-                v-for="(item, index) in formField"
-                class="form-item"
-                :class="getItemClass(item)"
-                :key="index"
-                @click.native.stop="setCurrentField(index)"
-                :label="item.text"
-              >
-                <i class="el-icon-delete remove-field" @click="removeField(index)"></i>
-                <d-field :config="item" :disabled="disabled"></d-field>
-              </el-form-item>
-            </draggable>
-          </el-form>
-        </el-main>
+        <el-form label-width="80px" class="el-main form-containter" @click.native.stop="clearCurrentField()">
+          <draggable v-model="formField" :options="formFieldOption" class="form-containter" @start="onDragStart">
+            <el-form-item
+              v-for="(item, index) in formField"
+              class="form-item"
+              :class="getItemClass(item)"
+              :key="index"
+              @click.native.stop="setCurrentField(index)"
+              :label="item.text"
+            >
+              <i class="el-icon-delete remove-field" @click="removeField(index)"></i>
+              <d-field :config="item" :disabled="disabled"></d-field>
+            </el-form-item>
+          </draggable>
+        </el-form>
         <el-aside class="option-form">
           <option-form :config="curField" v-if="curField!==null" :dataRemoved="this.removeFieldData"></option-form>
         </el-aside>

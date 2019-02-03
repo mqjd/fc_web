@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-aside width="240px">
       <div class="context-menu" :style="contextStyle">
         <div @click="add"><i class="context add el-icon-plus"></i>新增</div>
@@ -137,32 +137,35 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-aside{
-  border-right: 1px solid rgb(230, 230, 230);
-}
-.context-menu{
-  position: absolute;
-  display: none;
-  z-index: 1000;
-  font-size: 14px;
-  background-color: #FFFFFF;
-  cursor: pointer;
-  box-shadow: 2px 2px 19px #aaa;
-  &>div{
-    padding: 5px 10px;
-    border-bottom: 1px solid rgb(230, 230, 230);
+.container{
+  height: 100%;
+  .el-aside{
+    border-right: 1px solid rgb(230, 230, 230);
   }
-  .context{
-    margin-right: 5px;
+  .context-menu{
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    box-shadow: 2px 2px 19px #aaa;
+    &>div{
+      padding: 5px 10px;
+      border-bottom: 1px solid rgb(230, 230, 230);
+    }
+    .context{
+      margin-right: 5px;
+    }
   }
-}
-.add{
-  color: #67C23A;
-}
-.edit{
-  color: #E6A23C;
-}
-.delete{
-  color: #F56C6C;
+  .add{
+    color: #67C23A;
+  }
+  .edit{
+    color: #E6A23C;
+  }
+  .delete{
+    color: #F56C6C;
+  }
 }
 </style>

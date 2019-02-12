@@ -11,7 +11,6 @@ import ElementUI from 'element-ui'
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import router from './router'
 import './perm'
-
 Vue.use(ElementUI)
 Vue.component(CollapseTransition.name, CollapseTransition)
 Vue.config.productionTip = false

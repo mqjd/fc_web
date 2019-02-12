@@ -117,8 +117,9 @@ export default {
         const width = endClientRect.left - startClientRect.left + endClientRect.width - 1
         const height = endClientRect.top - startClientRect.top + endClientRect.height - 1
         const baseClientRect = this.$refs.tableBody.$el.getBoundingClientRect()
-        const top = startClientRect.y - baseClientRect.top - 1
-        const left = startClientRect.x - baseClientRect.left - this.scrollLeft - 1
+        console.log(startClientRect, baseClientRect)
+        const top = startClientRect.top - baseClientRect.top + this.scrollTop - 1
+        const left = startClientRect.left - baseClientRect.left + this.scrollLeft - 1
         return {
           width: `${width}px`,
           height: `${height}px`,
@@ -396,9 +397,7 @@ export default {
       }
     },
     getPosition (x, y) {
-      const clientX = event.clientX
-      const clientY = event.clientY
-      return [this.getPositionX(clientX), this.getPositionY(clientY)]
+      return [this.getPositionX(x), this.getPositionY(y)]
     },
     getPositionX (x) {
       const lists = this.$refs.tableHeader.$children[0].$el.children[0].children[0].children

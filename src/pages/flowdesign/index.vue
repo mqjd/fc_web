@@ -119,9 +119,10 @@ export default {
     },
     onDragEnd (ev) {
       ev.preventDefault()
+      const procpanelBound = this.$refs.procpanel.getBoundingClientRect()
       this.draggingItem.id = this.draggingItem.type + '_' + this.id
-      const x = ev.clientX - this.$refs.procpanel.offsetLeft - this.draggingItem.position[0] + this.$refs.procpanel.parentElement.scrollLeft
-      const y = ev.clientY - this.$refs.procpanel.offsetTop - this.draggingItem.position[1] + this.$refs.procpanel.parentElement.scrollTop
+      const x = ev.clientX - procpanelBound.left - this.draggingItem.position[0]
+      const y = ev.clientY - procpanelBound.top - this.draggingItem.position[1]
       this.draggingItem.position = [x, y]
       this.id++
       this.procModels.push(this.draggingItem)
@@ -278,6 +279,7 @@ export default {
   display: none;
 }
 .el-container{
+  height: 100%;
   .model-aside{
     border-right-color: rgb(230, 230, 230);
     border-right-style: solid;
@@ -295,6 +297,7 @@ export default {
   }
   .el-main{
     padding: 0px;
+    height: 100%;
     .procpanel{
       width: 100%;
       height: 100%;

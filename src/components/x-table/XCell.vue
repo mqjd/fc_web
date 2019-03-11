@@ -5,9 +5,7 @@
   >
     <x-content
       :text="text"
-      :style="style"
-      :textAlign="textAlign"
-      :verticalAlign="verticalAlign"
+      :style="{'max-height': rowHeight + 'px'}"
     >
     </x-content>
   </td>
@@ -19,7 +17,7 @@ export default {
   components: {
     XContent
   },
-  inject: ['cellSize'],
+  inject: ['rowHeight'],
   props: {
     colspan: {
       type: Number,
@@ -31,44 +29,6 @@ export default {
     },
     text: {
       type: String
-    },
-    width: {
-      type: Number
-    },
-    height: {
-      type: Number
-    },
-    rowIndex: {
-      type: Number,
-      required: true
-    },
-    cellIndex: {
-      type: Number,
-      required: true
-    },
-    textAlign: {
-      type: String,
-      default: 'left'
-    },
-    verticalAlign: {
-      type: String,
-      default: 'top'
-    }
-  },
-  computed: {
-    style () {
-      const style = {}
-      if (this.height !== undefined) {
-        style.height = this.height + 'px'
-      } else if (this.cellIndex === 0) {
-        style.height = this.cellSize.height + 'px'
-      }
-      if (this.width !== undefined) {
-        style.width = this.width + 'px'
-      } else if (this.rowIndex === 0) {
-        style.width = this.cellSize.width + 'px'
-      }
-      return style
     }
   }
 }
@@ -77,5 +37,6 @@ export default {
 td{
   border-right: 1px solid #EEEEEE;
   border-bottom: 1px solid #EEEEEE;
+  word-break: break-all;
 }
 </style>

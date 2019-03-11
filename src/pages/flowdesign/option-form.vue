@@ -19,7 +19,7 @@
         <el-radio label="2">高级</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-button v-if="config.type==='flow'" type="primary" class="deploy">部署</el-button>
+    <el-button v-if="config.type==='flow'" type="primary" class="deploy" @click="deploy">部署</el-button>
   </el-form>
 </template>
 <script>
@@ -38,6 +38,9 @@ export default {
     config: {
       type: Object,
       required: true
+    },
+    deploy: {
+      type: Function
     }
   },
   inject: ['instance'],

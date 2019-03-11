@@ -8,9 +8,9 @@
       </div>
       <el-tree
         ref="tree"
-        :data="data"
+        :data="treeData"
         :props="defaultProps"
-        node-key="id"
+        node-key="deptId"
         default-expand-all
         highlight-current
         :expand-on-click-node="false"
@@ -18,15 +18,50 @@
         @node-contextmenu="onTreeContextmenu"
       ></el-tree>
     </el-aside>
-    <el-main>Main</el-main>
+    <el-main>
+      <el-input placeholder="请输入科室代码或名称" style="width:200px" v-model="searchText"></el-input>
+      <el-table
+        stripe
+        :data="tableData_"
+        style="width: 100%">
+        <el-table-column
+          prop="deptCode"
+          label="科室代码"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="deptName"
+          label="科室名称"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="deptHead"
+          label="科室领导">
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-main>
     <el-dialog
       :title="dialogTitle"
       :visible="dialogVisible"
-      width="40%"
+      width="400px"
       :show-close="false">
       <el-form :model="dept" :rules="rules" ref="dept" label-width="100px">
-        <el-form-item label="名称" prop="label">
-          <el-input v-model="dept.label"></el-input>
+        <el-form-item label="科室编码" prop="label">
+          <el-input v-model="dept.deptCode"></el-input>
+        </el-form-item>
+        <el-form-item label="科室名称" prop="label">
+          <el-input v-model="dept.deptName"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -46,36 +81,54 @@ export default {
       dialogVisible: false,
       defaultProps: {
         children: 'children',
-        label: 'label'
+        label: 'deptName'
       },
       contextStyle: {},
-      contextItem: null,
-      contextNode: null,
+      contextItem: [],
+      contextNode: [],
       dept: {
         label: ''
       },
       rules: {
-        name: [
-          { required: true, message: '请输名称名称', trigger: 'blur' },
-          { max: 10, message: '长度要小于10个字符', trigger: 'blur' }
+        deptCode: [
+          { required: true, message: '请输科室代码', trigger: 'blur' },
+          { max: 10, message: '长度要小于20个字符', trigger: 'blur' }
+        ],
+        deptName: [
+          { required: true, message: '请输科室名称', trigger: 'blur' },
+          { max: 10, message: '长度要小于50个字符', trigger: 'blur' }
         ]
       },
       id: 4,
-      data: [{
-        label: '一级 1',
-        id: 1,
-        children: [{
-          label: '二级 1-1',
-          id: 2,
-          children: [{
-            id: 3,
-            label: '三级 1-1-1'
-          }]
-        }]
-      }]
+      treeData: null,
+      tableData: null,
+      searchText: ''
+    }
+  },
+  mounted () {
+    this.queryDept()
+  },
+  computed: {
+    tableData_ () {
+      if (this.searchText) {
+        return this.tableData.filter(item => item.deptCode.includes(this.searchText) || item.deptName.includes(this.searchText))
+      } else {
+        return this.tableData
+      }
     }
   },
   methods: {
+    queryDept () {
+      let me = this
+      this.$http.get('/SysDeptController/queryAll', {
+        params: {
+        }
+      })
+        .then(function (response) {
+          me.tableData = response.data.tableData
+          me.treeData = response.data.treeData
+        })
+    },
     hideContextMenu () {
       this.contextStyle.display = 'none'
       document.removeEventListener('click', this.hideContextMenu)
@@ -84,9 +137,10 @@ export default {
       this.contextItem = data
       this.contextNode = node
       this.$refs.tree.setCurrentNode(node)
+      const treeBound = this.$refs.tree.$el.getBoundingClientRect()
       this.contextStyle = {
-        top: event.pageY + 'px',
-        left: event.pageX + 'px',
+        top: event.pageY - treeBound.top + 'px',
+        left: event.pageX - treeBound.left + 'px',
         display: 'initial'
       }
       document.addEventListener('click', this.hideContextMenu)
@@ -102,7 +156,11 @@ export default {
       this.dialogTitle = '新增'
       this.dialogVisible = true
       this.dept = {
-        label: ''
+        deptId: null,
+        deptName: '',
+        deptCode: '',
+        deptHead: '',
+        pDeptId: this.contextItem.deptId
       }
     },
     edit () {
@@ -111,27 +169,43 @@ export default {
       this.dept = _.cloneDeep(this.contextItem)
     },
     remove () {
-      const parent = this.contextNode.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.label === this.contextItem.label)
-      children.splice(index, 1)
+      let me = this
+      this.$confirm('确定要删除该科室吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.get('/SysDeptController/removeDept', {
+          params: this.contextItem
+        })
+          .then(function (response) {
+            me.queryDept()
+            me.$message({
+              type: 'success',
+              message: '操作成功!'
+            })
+          })
+      })
     },
     save () {
-      if (this.dialogTitle === '新增') {
-        if (!this.contextItem.children) {
-          this.$set(this.contextItem, 'children', [])
-        }
-        const dept = _.cloneDeep(this.dept)
-        dept.id = this.id
-        this.id++
-        this.contextItem.children.push(dept)
-      } else {
-        const parent = this.contextNode.parent
-        const children = parent.data.children || parent.data
-        const index = children.findIndex(d => d.id === this.contextItem.id)
-        children.splice(index, 1, this.dept)
-      }
-      this.dialogVisible = false
+      let me = this
+      this.$http.get('/SysDeptController/saveDept', {
+        params: this.dept
+      })
+        .then(function (response) {
+          me.dialogVisible = false
+          me.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+          me.queryDept()
+        })
+    },
+    handleEdit (index, row) {
+      console.log(index, row)
+    },
+    handleDelete (index, row) {
+      console.log(index, row)
     }
   }
 }

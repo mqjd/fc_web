@@ -6,11 +6,12 @@
     ref="table"
   >
     <tbody>
+      <xtable-header :header="cellWidth"></xtable-header>
       <x-row
         v-for="(row,rowIndex) in table"
         :key="rowIndex"
         :columns="row"
-        :rowIndex="rowIndex"
+        :height="cellHeight[rowIndex]"
       >
       </x-row>
     </tbody>
@@ -18,13 +19,21 @@
 </template>
 <script>
 import XRow from './XRow.vue'
+import XtableHeader from './XtableHeader.vue'
 export default {
   name: 'xtable-content',
   components: {
-    XRow
+    XRow,
+    XtableHeader
   },
   props: {
     table: {
+      type: Array
+    },
+    cellWidth: {
+      type: Array
+    },
+    cellHeight: {
       type: Array
     }
   }

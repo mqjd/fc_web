@@ -42,13 +42,13 @@
         </div>
       </el-main>
       <el-aside class="option-form">
-        <option-form :config="curProcModel" v-if="curProcModel!==null"></option-form>
+        <option-form :config="curProcModel" :deploy="deploy" v-if="curProcModel!==null"></option-form>
       </el-aside>
     </el-container>
   </el-container>
 </template>
 <script>
-import ProcBaseModels from './procmodel-base-config.js'
+import { models } from './procmodel-base-config.js'
 import ProcModel from './package/ProcModel'
 import OptionForm from './option-form'
 import draggable from 'vuedraggable'
@@ -97,7 +97,7 @@ export default {
   },
   data () {
     return {
-      procBaseModels: ProcBaseModels,
+      procBaseModels: models,
       procModels: [],
       connections: [],
       instance: null,
@@ -266,6 +266,24 @@ export default {
         me.procModels.splice(index, 1)
         me.removeCurrentProcmodel()
       })
+    },
+    setZoom (event) {
+    },
+    deploy () {
+      let me = this
+      this.$http.post('/ProcessManageController/deploy', {
+        param: JSON.stringify({
+          models: this.procModels,
+          connections: this.connections,
+          processInfo: this.procInfo
+        })
+      })
+        .then(function (response) {
+          me.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+        })
     }
   }
 }
@@ -299,8 +317,8 @@ export default {
     padding: 0px;
     height: 100%;
     .procpanel{
-      width: 100%;
-      height: 100%;
+      width: 150%;
+      height: 150%;
       position: relative;
     }
   }

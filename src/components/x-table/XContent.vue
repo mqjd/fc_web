@@ -1,10 +1,6 @@
 <template>
-  <div class="cell-container">
-    <div class="cell-content" cellpadding="0">
-      <div class="x-cell" :style="{'text-align': textAlign, 'vertical-align': verticalAlign}">
-        {{ text }}
-      </div>
-    </div>
+  <div class="x-content">
+    {{ text }}
   </div>
 </template>
 <script>
@@ -13,29 +9,13 @@ export default {
   props: {
     text: {
       type: String
-    },
-    textAlign: {
-      type: String,
-      default: 'left'
-    },
-    verticalAlign: {
-      type: String,
-      default: 'top'
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.cell-container, .cell-content{
-  width: 100%;
-  height: 100%;
+.x-content{
+  display:block;
   overflow: hidden;
-}
-.cell-content{
-  display: table;
-  .x-cell{
-    display: table-cell;
-    text-overflow: ellipsis;
-  }
 }
 </style>

@@ -1,14 +1,11 @@
-var data = [{
+export const models = [{
   text: '事件',
   child: [{
     text: '开始',
     formKey: '',
     type: 'start-event',
     size: [100, 100],
-    position: [0, 0],
-    point: {
-      source: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
-    }
+    position: [0, 0]
   }, {
     text: '结束',
     size: [100, 100],
@@ -27,10 +24,7 @@ var data = [{
     assign: '',
     formKey: '',
     size: [100, 100],
-    position: [0, 0],
-    point: {
-      both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
-    }
+    position: [0, 0]
   }]
 }, {
   text: '网关',
@@ -38,18 +32,33 @@ var data = [{
     type: 'exclusive',
     text: '分支网关',
     size: [100, 100],
-    position: [0, 0],
-    point: {
-      both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
-    }
+    position: [0, 0]
   }, {
     type: 'parallel',
     text: '并行网关',
     size: [100, 100],
-    position: [0, 0],
-    point: {
-      both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
-    }
+    position: [0, 0]
   }]
 }]
-export default data
+
+export const points = {
+  'start-event': {
+    source: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
+  },
+  'end-event': {
+    target: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
+  },
+  'user-task': {
+    both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
+  },
+  'exclusive': {
+    both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
+  },
+  'parallel': {
+    both: ['TopCenter', 'BottomCenter', 'LeftMiddle', 'RightMiddle']
+  }
+}
+export default {
+  models,
+  points
+}

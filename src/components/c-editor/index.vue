@@ -21,6 +21,7 @@ export default {
     sidemenu: {
       handler (newVal, oldVal) {
         let me = this
+        this.$nextTick(this.resize)
         setTimeout(() => {
           me.resize()
         }, 300)

@@ -54,23 +54,25 @@ path, .jtk-endpoint {
 .procpanel .point-active {
   border: 2px dotted green;
 }
-.editor .mce-tinymce{
-  height: 100% !important;
-}
-.mce-panel{
-  box-sizing: border-box !important;
-}
-.mce-container-body.mce-stack-layout{
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-}
-.mce-edit-area{
-  overflow: auto;
-  flex: 1;
-}
-.mce-edit-area>iframe{
-  height: 100% !important;
+.editor{
+  .mce-tinymce{
+    height: 100% !important;
+  }
+  .mce-panel{
+    box-sizing: border-box !important;
+  }
+  .mce-container-body.mce-stack-layout{
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+  .mce-edit-area{
+    overflow: auto;
+    flex: 1;
+  }
+  .mce-edit-area>iframe{
+    height: 100% !important;
+  }
 }
 a:focus,
 a:active {

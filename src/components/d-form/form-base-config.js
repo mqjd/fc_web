@@ -36,7 +36,7 @@ var data = {
     text: '文本类型',
     child: [{
       type: 'input',
-      text: '文本',
+      text: '输入框',
       placeholder: '请输入',
       allrow: false,
       cols: 2,

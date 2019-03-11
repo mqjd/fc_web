@@ -44,7 +44,7 @@ export const RouterMap = [{
   component: Main,
   children: [{
     path: 'xTable',
-    name: 'xTable',
+    name: 'x-table',
     meta: { title: '表格', icon: 'fc-icon-table' },
     component: () => import('@/components/x-table')
   }, {
@@ -117,15 +117,6 @@ export const RouterMap = [{
       icon: 'fc-icon-file-text'
     },
     component: () => import('@/components/calendar')
-  },
-  {
-    path: 'table',
-    name: 'table',
-    meta: {
-      title: 'table',
-      icon: 'fc-icon-file-text'
-    },
-    component: () => import('@/components/d-table')
   }]
 }]
 

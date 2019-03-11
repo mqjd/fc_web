@@ -2,30 +2,50 @@
   <el-container class="container">
     <el-header style="height:auto" class="x-table-tool">
       <div class="tool-align">
-        <el-button-group>
-          <el-button size="mini" icon="fc-icon-vertical-align-top"></el-button>
-          <el-button size="mini" icon="fc-icon-vertical-align-middl"></el-button>
-          <el-button size="mini" icon="fc-icon-vertical-align-botto"></el-button>
-        </el-button-group>
-        <el-button-group>
-          <el-button size="mini" icon="fc-icon-align-left"></el-button>
-          <el-button size="mini" icon="fc-icon-align-center"></el-button>
-          <el-button size="mini" icon="fc-icon-align-right"></el-button>
-        </el-button-group>
+        <div class="text-align">
+          <el-button-group>
+            <el-tooltip class="item" offset="40" effect="light" :open-delay="400" :visible-arrow="false" content="顶部对齐" placement="bottom">
+              <el-button size="mini" icon="fc-icon-dingbuduiqi" @click="alignCell({'vertical-align': 'top'})"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" offset="40" effect="light" :open-delay="400" :visible-arrow="false" content="垂直居中" placement="bottom">
+              <el-button size="mini" icon="fc-icon-chuizhijuzhongdefuben" @click="alignCell({'vertical-align': 'middle'})"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" offset="40" effect="light" :open-delay="400" :visible-arrow="false" content="底部对齐" placement="bottom">
+              <el-button size="mini" icon="fc-icon-dibu" @click="alignCell({'vertical-align': 'bottom'})"></el-button>
+            </el-tooltip>
+          </el-button-group>
+          <el-button-group>
+            <el-button size="mini" icon="fc-icon-align-left" @click="alignCell({'text-align': 'left'})"></el-button>
+            <el-button size="mini" icon="fc-icon-align-center" @click="alignCell({'text-align': 'center'})"></el-button>
+            <el-button size="mini" icon="fc-icon-align-right" @click="alignCell({'text-align': 'right'})"></el-button>
+          </el-button-group>
+        </div>
+        <el-button size="mini" icon="fc-icon-mergecell" @click="mergeCell"></el-button>
+        <el-button size="mini" icon="fc-icon-splitcell" @click="splitCell"></el-button>
       </div>
     </el-header>
     <el-container class="x-table" ref="xTable">
       <el-container class="x-table-rownum">
         <el-header class="x-table-header" :style="{height: cellSize.height + 'px!important'}"></el-header>
         <el-main class="x-rownum-container" ref="tableRownum">
-          <xtable-content :table="rownum"></xtable-content>
+          <xtable-content
+            :table="rownum"
+            :cellWidth="cornerCell"
+            :cellHeight="cellHeight"
+          >
+          </xtable-content>
         </el-main>
       </el-container>
       <el-container class="x-table-view">
         <el-header class="x-table-header">
           <el-container>
             <el-main ref="tableHeader" class="x-header-container">
-              <xtable-content :table="header"></xtable-content>
+              <xtable-content
+                :table="header"
+                :cellWidth="cellWidth"
+                :cellHeight="cornerCell"
+              >
+              </xtable-content>
             </el-main>
             <el-aside width="8px"></el-aside>
           </el-container>
@@ -36,19 +56,24 @@
           @dblclick.native="dblclick($event)"
           ref="tableBody">
           <div
-             @mousedown="mousedown($event)"
+             @mousedown.left="mousedown($event)"
           >
             <div class="select-area"
+              @contextmenu.prevent="blankFunc"
               :style="selectAreaStyle">
-              <input
+              <textarea
                 v-if="editCell"
                 v-focus
                 v-model="editCell.text"
                 ref="cellValue"
-              />
+                @mousedown.stop="blankFunc"
+              >
+              </textarea>
             </div>
             <xtable-content
               :table="tableData"
+              :cellWidth="cellWidth"
+              :cellHeight="cellHeight"
             ></xtable-content>
           </div>
         </el-main>
@@ -91,11 +116,6 @@ export default {
   components: {
     XtableContent
   },
-  provide () {
-    return {
-      cellSize: this.cellSize
-    }
-  },
   watch: {
     scrollLeft (val) {
       this.$refs.tableHeader.$el.scrollLeft = val
@@ -105,32 +125,7 @@ export default {
     },
     selectEnd () {
       this.setSelectArea()
-    }
-  },
-  computed: {
-    selectAreaStyle () {
-      if (this.selectedArea) {
-        const coordinate = this.getCoordinate()
-        const tableElement = this.$refs.tableBody.$children[0].$el.children[0].children
-        const startClientRect = tableElement[coordinate.y1].children[coordinate.x1].getBoundingClientRect()
-        const endClientRect = tableElement[coordinate.y2].children[coordinate.x2].getBoundingClientRect()
-        const width = endClientRect.left - startClientRect.left + endClientRect.width - 1
-        const height = endClientRect.top - startClientRect.top + endClientRect.height - 1
-        const baseClientRect = this.$refs.tableBody.$el.getBoundingClientRect()
-        console.log(startClientRect, baseClientRect)
-        const top = startClientRect.top - baseClientRect.top + this.scrollTop - 1
-        const left = startClientRect.left - baseClientRect.left + this.scrollLeft - 1
-        return {
-          width: `${width}px`,
-          height: `${height}px`,
-          top: `${top}px`,
-          left: `${left}px`
-        }
-      } else {
-        return {
-          display: 'none'
-        }
-      }
+      this.setSelectAreaStyle()
     }
   },
   data () {
@@ -141,6 +136,9 @@ export default {
       },
       rows: 30,
       cols: 20,
+      cornerCell: new Array(1).fill(28),
+      cellHeight: new Array(30).fill(28),
+      cellWidth: new Array(20).fill(80),
       scrollLeft: 0,
       scrollTop: 0,
       selectStart: null,
@@ -149,7 +147,10 @@ export default {
       header: null,
       rownum: null,
       tableData: null,
-      editCell: null
+      editCell: null,
+      selectAreaStyle: {
+        display: 'none'
+      }
     }
   },
   mounted () {
@@ -158,15 +159,38 @@ export default {
     this.initTableData()
   },
   methods: {
+    setSelectAreaStyle () {
+      if (this.selectedArea) {
+        const coordinate = this.getCoordinate()
+        const tableElement = this.$refs.tableBody.$el.querySelector('tbody').children
+        const startClientRect = tableElement[coordinate.y1].children[coordinate.x1].getBoundingClientRect()
+        const endClientRect = tableElement[coordinate.y2].children[coordinate.x2].getBoundingClientRect()
+        const width = endClientRect.left - startClientRect.left + endClientRect.width - 1
+        const height = endClientRect.top - startClientRect.top + endClientRect.height - 1
+        const baseClientRect = this.$refs.tableBody.$el.getBoundingClientRect()
+        const top = startClientRect.top - baseClientRect.top + this.scrollTop - 1
+        const left = startClientRect.left - baseClientRect.left + this.scrollLeft - 1
+        this.selectAreaStyle = {
+          width: `${width}px`,
+          height: `${height}px`,
+          top: `${top}px`,
+          left: `${left}px`
+        }
+      } else {
+        this.selectAreaStyle = {
+          display: 'none'
+        }
+      }
+    },
     getCoordinate () {
       const area = this.selectedArea
       let x1 = this.tableData[area.y1].findIndex(item => item.x === area.x1)
       const endCell = this.findTopLeftCell(area.x2, area.y2)
       return {
         x1: x1,
-        y1: area.y1,
+        y1: area.y1 + 1,
         x2: this.tableData[endCell.y].indexOf(endCell),
-        y2: endCell.y
+        y2: endCell.y + 1
       }
     },
     initTableHeader () {
@@ -176,23 +200,28 @@ export default {
           text: this.numberToletter(i),
           x: i,
           y: 0,
-          textAlign: 'center',
-          verticalAlign: 'middle'
+          key: `${i}`,
+          style: {
+            'text-align': 'center',
+            'vertical-align': 'middle',
+            'border-bottom': '1px solid #EEEEEE'
+          }
         })
       }
       this.header = [header]
     },
     initTableRownum () {
       let rownum = []
-      const cellSize = this.cellSize.height
       for (let i = 0; i < this.rows; i++) {
         rownum.push([{
           text: (i + 1) + '',
           x: 0,
           y: i,
-          textAlign: 'center',
-          verticalAlign: 'middle',
-          width: cellSize
+          key: `${i}`,
+          style: {
+            'text-align': 'center',
+            'vertical-align': 'middle'
+          }
         }])
       }
       this.rownum = rownum
@@ -205,8 +234,13 @@ export default {
           row.push({
             x: j,
             y: i,
+            key: `${i}-${j}`,
             colspan: 1,
-            rowspan: 1
+            rowspan: 1,
+            style: {
+              'text-align': 'left',
+              'vertical-align': 'top'
+            }
           })
         }
         tableData.push(row)
@@ -214,13 +248,13 @@ export default {
       this.tableData = tableData
     },
     setSelectArea () {
-      const start = this.tableData[this.selectStart[1]][this.selectStart[0]]
-      const end = this.tableData[this.selectEnd[1]][this.selectEnd[0]]
+      const start = this.selectStart
+      const end = this.selectEnd
       const selectedArea = {
-        x1: min(start.x, end.x),
-        y1: min(start.y, end.y),
-        x2: max(start.x + start.colspan - 1, end.x + end.colspan - 1),
-        y2: max(start.y + start.rowspan - 1, end.y + end.rowspan - 1)
+        x1: min(start[0], end[0]),
+        y1: min(start[1], end[1]),
+        x2: max(start[0], end[0]),
+        y2: max(start[1], end[1])
       }
       this.calcSelectArea(selectedArea)
       this.selectedArea = selectedArea
@@ -374,14 +408,15 @@ export default {
     },
     dblclick (event) {
       const position = this.getPosition(event.clientX, event.clientY)
-      this.editCell = this.tableData[position[1]][position[0]]
+      this.editCell = this.findTopLeftCell(position[0], position[1])
       this.editCell.isEditing = true
     },
     isSamePosition (position) {
       let result = false
       if (this.selectStart) {
-        if (this.selectStart[0] === position[0] && this.selectStart[1] === position[1] &&
-          this.selectEnd[0] === position[0] && this.selectEnd[1] === position[1]) {
+        const [x1, y1] = this.selectStart
+        const [x2, y2] = position
+        if (this.findTopLeftCell(x1, y1) === this.findTopLeftCell(x2, y2)) {
           result = true
         }
       } else {
@@ -397,7 +432,7 @@ export default {
       }
     },
     getPosition (x, y) {
-      return [this.getPositionX(x), this.getPositionY(y)]
+      return [this.getPositionX(x), this.getPositionY(y) - 1]
     },
     getPositionX (x) {
       const lists = this.$refs.tableHeader.$children[0].$el.children[0].children[0].children
@@ -433,26 +468,92 @@ export default {
         }
       }
     },
+    alignCell (align) {
+      const selectedArea = this.selectedArea
+      for (let i = selectedArea.y1; i <= selectedArea.y2; i++) {
+        let rowData = this.tableData[i]
+        let x1 = findIndex(rowData, item => item.x + item.colspan - 1 >= selectedArea.x1)
+        let x2 = findLastIndex(rowData, item => item.x <= selectedArea.x2)
+        if (x1 !== -1 && x2 !== -1) {
+          for (let j = x1; j <= x2; j++) {
+            rowData[j].style = {
+              ...rowData[j].style,
+              ...align
+            }
+          }
+        }
+      }
+    },
     mergeCell () {
       const selectedArea = this.selectedArea
+      if (this.findTopLeftCell(selectedArea.x1, selectedArea.y1) === this.findTopLeftCell(selectedArea.x2, selectedArea.y2)) {
+        return
+      }
       let rowData = this.tableData[selectedArea.y1]
-      let x1 = rowData.findIndex(item => item.selected)
-      let x2 = findLastIndex(rowData, item => item.selected)
+      let x1 = findIndex(rowData, item => item.x + item.colspan - 1 >= selectedArea.x1)
+      let x2 = findLastIndex(rowData, item => item.x <= selectedArea.x2)
       this.tableData[selectedArea.y1][x1].rowspan = selectedArea.y2 - selectedArea.y1 + 1
       this.tableData[selectedArea.y1][x1].colspan = selectedArea.x2 - selectedArea.x1 + 1
       rowData.splice(x1 + 1, x2 - x1)
       for (let i = selectedArea.y1 + 1; i <= selectedArea.y2; i++) {
         rowData = this.tableData[i]
-        let x1_ = findIndex(rowData, item => item.selected)
-        let x2_ = findLastIndex(rowData, item => item.selected)
+        let x1_ = findIndex(rowData, item => item.x + item.colspan - 1 >= selectedArea.x1)
+        let x2_ = findLastIndex(rowData, item => item.x <= selectedArea.x2)
         if (x1_ !== -1 && x2_ !== -1) {
           rowData.splice(x1_, x2_ - x1_ + 1)
         }
       }
-      this.selectedArea.x2 = this.selectedArea.x1
-      this.selectedArea.y2 = this.selectedArea.y1
-      this.setSelectArea(this.selectedArea.start, this.selectedArea.end)
-      this.showMenu = false
+      this.$nextTick(function () {
+        this.selectEnd = this.selectStart = [selectedArea.x1, selectedArea.y1]
+      })
+    },
+    splitCell () {
+      const selectedArea = this.selectedArea
+      if (this.findTopLeftCell(selectedArea.x1, selectedArea.y1) === this.findTopLeftCell(selectedArea.x2, selectedArea.y2)) {
+        let rowData = this.tableData[selectedArea.y1]
+        let x1 = findLastIndex(rowData, item => item.x + item.colspan <= selectedArea.x1)
+        x1 = x1 === -1 ? 0 : x1 + 1
+        let cell = this.tableData[selectedArea.y1][x1]
+        const array = []
+        for (let i = 1; i < cell.colspan; i++) {
+          array.push({
+            x: cell.x + i,
+            y: cell.y,
+            colspan: 1,
+            rowspan: 1,
+            style: {
+              'text-align': 'left',
+              'vertical-align': 'top'
+            }
+          })
+        }
+        rowData.splice(x1 + 1, 0, ...array)
+        for (let i = selectedArea.y1 + 1; i <= selectedArea.y2; i++) {
+          rowData = this.tableData[i]
+          let x1_ = findLastIndex(rowData, item => item.x + item.colspan <= selectedArea.x1)
+          x1_ = x1_ === -1 ? 0 : x1_ + 1
+          const array_ = []
+          for (let j = 0; j < cell.colspan; j++) {
+            array_.push({
+              x: cell.x + j,
+              y: i,
+              colspan: 1,
+              rowspan: 1,
+              key: i + '-' + (cell.x + j),
+              style: {
+                'text-align': 'left',
+                'vertical-align': 'top'
+              }
+            })
+          }
+          rowData.splice(x1_, 0, ...array_)
+        }
+        cell.rowspan = 1
+        cell.colspan = 1
+        this.$nextTick(function () {
+          this.selectEnd = this.selectStart = [selectedArea.x1, selectedArea.y1]
+        })
+      }
     },
     cellBorder () {
       const selectedArea = this.selectedArea
@@ -466,6 +567,9 @@ export default {
       }
       this.setSelected(this.selectedArea, false)
       this.showMenu = false
+    },
+    blankFunc () {
+      return false
     }
   }
 }
@@ -479,12 +583,13 @@ export default {
     border: 1px solid #4caf50;
     background-color: rgba(0, 0, 0, 0.1);
     z-index: 1;
-    input{
+    textarea{
       height: 100%;
       width: 100%;
       outline: none;
       box-sizing: border-box;
       border: none;
+      resize: none;
     }
   }
   .x-table-tool{
@@ -493,11 +598,14 @@ export default {
     }
     .el-button-group{
       display: block;
-      .el-button{
-        padding:2px;
-        font-size: 20px;
-        border: none;
-      }
+    }
+    .el-button{
+      padding:2px;
+      font-size: 20px;
+      border: none;
+    }
+    .text-align{
+      display: inline-block;
     }
   }
   .x-table{

@@ -1,3 +1,5 @@
+import { points } from '../procmodel-base-config.js'
+
 const connectorPaintStyle = {
   strokeWidth: 1,
   stroke: '#61B7CF',
@@ -116,7 +118,7 @@ export default {
       })
     },
     addPoint () {
-      const point = this.options.point
+      const point = points[this.options.type]
       this.addPoint_(sourceEndpoint, point.source)
       this.addPoint_(targetEndpoint, point.target)
       this.addPoint_(sourceAndTargetEndpoint, point.both)

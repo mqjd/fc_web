@@ -1,17 +1,12 @@
 <template>
-  <tr>
+  <tr :style="{height: height + 'px'}">
     <x-cell
-      v-for="(column, cellIndex) in columns"
+      v-for="column in columns"
       :key="column.key"
       :rowspan="column.rowspan"
       :colspan="column.colspan"
       :text="column.text"
-      :cellIndex="cellIndex"
-      :rowIndex="rowIndex"
-      :width="column.width"
-      :height="column.height"
-      :textAlign="column.textAlign"
-      :verticalAlign="column.verticalAlign"
+      :style="column.style"
     >
     </x-cell>
   </tr>
@@ -23,18 +18,20 @@ export default {
   components: {
     XCell
   },
+  provide () {
+    return {
+      rowHeight: this.height
+    }
+  },
   props: {
     columns: {
       type: Array,
       required: true
     },
-    rowIndex: {
+    height: {
       type: Number,
       required: true
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
